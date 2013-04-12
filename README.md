@@ -1,0 +1,4 @@
+ro
+==
+
+rozpoznavanie obrazcov
