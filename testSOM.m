@@ -19,7 +19,16 @@
 %este treba zistit ako z toho vyrobyt ROC krivku :)
 %opakujes 4 krat tak aby kazda cast databazi raz bola ako testovacia
 
+%sem das trenovaciu mnozinu bez stlpika co sa ma zistovat
 inputs = mushs';
+%sem das testovaciu mnozinu bez stlpika co sa ma zistovat
+test = mushs';
+%sem das stlpik testovacej mnoziny co sa ma testovat
+c = c;
+%sem das stlpik testovacej mnoziny co sa ma testovat prekonvertovany
+%output2binary
+c = c;
+%snad je ROC krivka dobre porvnaj s neuronkami :D
 
 % Create a Self-Organizing Map
 dimension1 = 10;
@@ -52,7 +61,7 @@ for i = 1:k
     sums(i, :) = sum(out');
 end
 
-test = mushs';
+
 out = net(test);
 % out = out';
 [m,n] = size(mushs);
@@ -68,7 +77,8 @@ end;
 rate = sum(correct)/m
 outputs = output2binary(outs');
 %malo by vyratat roc krivku este ju musis zobrazit :)
-[tpr,fpr,thresholds] = roc(cT,outputs);
+%[tpr,fpr,thresholds] = roc(cT,outputs);
+figure; plotroc(cT, outputs);
 
 % View the Network
 % view(net)

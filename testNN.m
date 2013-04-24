@@ -12,8 +12,14 @@
 %testujes na 1 zo 4
 %za komentarom test je co musis spravit aby si otestoval siet
 
+%sem das testovaciu mnozinu bez stlpika na urcenie
 inputs = mushs';
+%sem das stlpik na urcenie prekonvertovany funkciu output2binary
 targets = cT';
+%sem das testovaciu mnozinu bez stlpika
+test = mushs';
+%sem das stlpik skonvertovany output2binary
+target = cT';
 
 % Create a Pattern Recognition Network
 hiddenLayerSize = 10;
@@ -55,8 +61,9 @@ outputs = net(inputs);
 errors = gsubtract(targets,outputs);
 performance = perform(net,targets,outputs)
 %toto som pridal vykresli ti to roc krivku :)
-outs = sim(net, mushs');
-plotroc(targets, outs);
+outs = sim(net, test);
+plotroc(target, outs);
+figure, plotconfusion(target, outs)
 
 % Recalculate Training, Validation and Test Performance
 trainTargets = targets .* tr.trainMask{1};
@@ -67,11 +74,11 @@ valPerformance = perform(net,valTargets,outputs)
 testPerformance = perform(net,testTargets,outputs)
 
 % View the Network
-view(net)
+%view(net)
 
 % Plots
 % Uncomment these lines to enable various plots.
 %figure, plotperform(tr)
 %figure, plottrainstate(tr)
-figure, plotconfusion(targets,outputs)
+%figure, plotconfusion(targets,outputs)
 %figure, ploterrhist(errors)
