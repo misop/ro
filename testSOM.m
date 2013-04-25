@@ -27,7 +27,7 @@ test = mushs';
 c = c;
 %sem das stlpik testovacej mnoziny co sa ma testovat prekonvertovany
 %output2binary
-c = c;
+cT = output2binary(c);
 %snad je ROC krivka dobre porvnaj s neuronkami :D
 
 % Create a Self-Organizing Map
