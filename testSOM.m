@@ -29,6 +29,8 @@ c = c;
 %output2binary
 cT = output2binary(c);
 %snad je ROC krivka dobre porvnaj s neuronkami :D
+%kolko roznych hodnot mozes mat
+k = 7;
 
 % Create a Self-Organizing Map
 dimension1 = 10;
@@ -46,8 +48,7 @@ net = selforgmap([dimension1 dimension2]);
 % treba pridat pomer
 % nasobit cisla pomerom
 
-%kolko roznych hodnot mozes mat
-k = 2;
+
 
 %sums su pre kazdy druh co ti moze vyjst kolko ich urcil do ktorej casti
 %mapy
