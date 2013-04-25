@@ -11,6 +11,9 @@ if(skosenie_stromu > 0)
 end;
 
 a = t.eval(test_set);
+
+%plotroc(output2binary(selected_column), output2binary(a));
+
 [m, n] = size(a);
 
 mini = min(selected_column);    % malo by byt 1
