@@ -19,6 +19,15 @@
 %este treba zistit ako z toho vyrobyt ROC krivku :)
 %opakujes 4 krat tak aby kazda cast databazi raz bola ako testovacia
 
+
+
+
+% rozdeli databazu na 5 casti
+% indices = crossvalind('Kfold', shrooms(:,1), 5);
+% priradi do premennej mushs druhu z 5 casti
+% mI = indices == 2;
+% mushs = shrooms(mI, :);
+
 %sem das trenovaciu mnozinu bez stlpika co sa ma zistovat
 inputs = mushs';
 %sem das testovaciu mnozinu bez stlpika co sa ma zistovat
@@ -58,7 +67,7 @@ for i = 1:k
     idx = (c(:,1)==i);
     mushsT = mushs(idx, :);
     out = net(mushsT');
-    figure, plotsomhits(net,mushsT')
+    %figure, plotsomhits(net,mushsT')
     sums(i, :) = sum(out');
 end
 
@@ -79,7 +88,12 @@ rate = sum(correct)/m
 outputs = output2binary(outs');
 %malo by vyratat roc krivku este ju musis zobrazit :)
 %[tpr,fpr,thresholds] = roc(cT,outputs);
-figure; plotroc(cT, outputs);
+%outs = sim(net, test);
+%confusion matica celkom fajn ale asi ju prezen excelom nech nejako vyzera
+%:D
+[confusion, order] = confusionmat(outs, c');
+%ROC pre viac ako ano/nie je blbost :D
+%figure; plotroc(cT, outputs);
 
 % View the Network
 % view(net)
