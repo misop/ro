@@ -1,5 +1,5 @@
 function testTree(database, selected_column, pocet_validacii, redukcia)
-%TEST_TREE otestuje strom na testovacej mnozine a zobrazi ROC krivky
+%TESTTREE otestuje strom na testovacej mnozine a zobrazi ROC krivky
 %   database - shrooms, pripadne ina databaza uz nacitana
 %   selected_column - cislo stlpca ktory sa snazite otestovat
 %   pocet_validacii - kolko krat validuje, vysledky priemeruje
@@ -35,8 +35,8 @@ for pocet_dimenzii = 1:(d_stlpce-1)
                 train_set = compute_mapping(train_set, 'PCA', pocet_dimenzii);
                 test_set = compute_mapping(test_set, 'PCA', pocet_dimenzii);
             elseif(redukcia == 1)
-                train_set = compute_mapping(train_set, 'ICA', pocet_dimenzii);
-                test_set = compute_mapping(test_set, 'ICA', pocet_dimenzii);
+                train_set = compute_mapping(train_set, 'FA', pocet_dimenzii);
+                test_set = compute_mapping(test_set, 'FA', pocet_dimenzii);
             end;
         end;
         
@@ -72,9 +72,9 @@ for pocet_dimenzii = 1:(d_stlpce-1)
             idx = pocet_casti;
         end;
     end;
-        % vloz hodnoty do nasho pola, ktore potom vykreslime
-        % malo by byt v percentach
-        ROCs(pocet_dimenzii) = mean(result);
+    % vloz hodnoty do nasho pola, ktore potom vykreslime
+    % malo by byt v percentach
+    ROCs(pocet_dimenzii) = mean(result);
 end;
 
 x = 1:(d_stlpce-1);
