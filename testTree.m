@@ -3,7 +3,7 @@ function testTree(database, selected_column, pocet_validacii, redukcia)
 %   database - shrooms, pripadne ina databaza uz nacitana
 %   selected_column - cislo stlpca ktory sa snazite otestovat
 %   pocet_validacii - kolko krat validuje, vysledky priemeruje
-%   redukcia - 0 PCA, 1 - FA (LDA nefungovalo)
+%   redukcia - 0 PCA, 1 - FA (LDA nefungovalo), 2 - ICA
 
 [d_riadky, d_stlpce] = size(database);
 % pre kazdu dimenziu mame cislo -> vysledna ROC krivka
@@ -37,6 +37,9 @@ for pocet_dimenzii = 1:(d_stlpce-1)
             elseif(redukcia == 1)
                 train_set = compute_mapping(train_set, 'FA', pocet_dimenzii);
                 test_set = compute_mapping(test_set, 'FA', pocet_dimenzii);
+            elseif(redukcia == 2)
+                 train_set = fastica(train_set', 'numOfIC', pocet_dimenzii, 'stabilization', 'on', 'maxNumIterations', 5000)';
+                 test_set = fastica(test_set', 'numOfIC', pocet_dimenzii, 'stabilization', 'on', 'maxNumIterations', 5000)';
             end;
         end;
         
