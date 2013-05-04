@@ -1,5 +1,5 @@
-function Test_Tree( t, test_set, selected_column, skosenie_stromu )
-%TEST_TREE otestuje strom na testovacej mnozine a zobrazi ROC krivky
+function testTree_old( t, test_set, selected_column, skosenie_stromu )
+%TESTTREE_OLD otestuje strom na testovacej mnozine a zobrazi ROC krivky
 %   t - uz natrenovany strom zhora
 %   test_set - testovacia mnozina, bez stlpca ktory testujete
 %   selected_column - ten stlpec ktory sa snazite otestovat
