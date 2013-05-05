@@ -3,21 +3,20 @@ function t = Tree( train_set, selected_column, cislo_stlpca )
 %   train_set - trenovacia mnozina ("shrooms"), bez stlpca ktory testujete
 %   selected_column - ten stlpec ktory sa snazite otestovat
 %   cislo_stlpca - cislo stlpca ktory chcete testovat, koli peknemu vypisu
-%   -> cislujte to od 0, tj edible = 0, cap-shape = 1...
 %
 %
 %   napisem vam tu "testovaci" priklad ako zavolat tieto funkcie
 %   -----------------------------------------------------------------------
 %
 %   load shrooms
-%   [c, x] = takecolumn(shrooms, 2);
+%   [c, x] = takecolumn(shrooms, 1);
 %   t = Tree(x, c, 1);
-%   Test_Tree(t, x, c, 0);
 %
 %   -----------------------------------------------------------------------
 
 N = 22; idx = 1;
 names = cell(1,N);
+cislo_stlpca = cislo_stlpca-1;
 for i=0:N
     if(i == cislo_stlpca)
         continue;
