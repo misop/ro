@@ -99,7 +99,7 @@ for pocet_dimenzii = 1:(d_stlpce-1)
         % rate ako SOM aj confusion maticu :)
         outputs = net(test);
 
-        [m,n] = size(test');
+        [m,n] = size(test_set);
         correct = [];
         outs = [];
         for i = 1:m
