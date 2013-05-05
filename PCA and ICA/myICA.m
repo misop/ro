@@ -36,7 +36,7 @@ function [z_ic A T mean_z] = myICA(z,NUM,varargin)
 
 eps = 1e-4; % Convergence criteria
 maxSamples = 1000; % Max number of data points in sample mean calculations
-maxIters = 100; % Maximum number of iterations allowed
+maxIters = 5000; % Maximum number of iterations allowed
 
 % Parse user input
 if (nargin == 3)
