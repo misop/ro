@@ -1,4 +1,4 @@
-function LinearClassifier( data_set, selected_column, threshold )
+function [vektor] = LinearClassifier( data_set, selected_column, threshold, max_it )
 %LINEARCLASSIFIER Skusi pouzit Linearny Klassifier na data
 %   data_set - matica dat ("shrooms"), bez stlpca ktory testujete
 %   selected_column - ten stlpec ktory sa snazite otestovat
@@ -6,8 +6,10 @@ function LinearClassifier( data_set, selected_column, threshold )
 if(max(selected_column) > 2)
     return;
 end;
+if nargin < 4
+    max_it = 2000;
+end
 
-max_it = 100;
 [m, n] = size(data_set);
 vektor = ones(1, n);
 target = selected_column > 1;
