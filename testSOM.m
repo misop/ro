@@ -18,8 +18,8 @@ for pocet_dimenzii = 1:(d_stlpce-1)
             % rozdeli databazu na dany pocet casti
             indices = crossvalind('Kfold', database(:,selected_column), pocet_validacii);
             % priradi patricne indexy pre dane casti, pricom
-            % pocet_casti - 1 = trenovacia mnozina
-            % 1 - testovacia mnozina
+            % trenovacia mnozina = pocet_casti - 1
+            % testovacia mnozina = 1
             mI1 = indices ~= validacia;
             mI2 = indices == validacia;
             % priradi databazu pre dane indexy
