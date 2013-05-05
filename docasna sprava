@@ -1,0 +1,54 @@
+Jakub Dobeš 
+Rastislav Kamenický
+Michal Jarábek
+Michal Piovarči
+Záverečná správa
+Databáza:
+Ako databázu sme použili súbor dát o hríboch. Obsahuje vzorky zodpovedajúce 23 druhom rebrových hríbov. V databáze máme 8124 hríbov s 23 príznakmi.
+Popis príznakov
+1.  Jedlosť: jedlé=e, jedovaté=p 
+2.	Tvar klobúku: zvon=b, kuželový=c, konvexný=x, plochý=f, uzlový=k, klesnutý=s 
+3.	Povrch klobúku: vlaknitý=f, drážkový=g, šupinatý=y, hladký=s 
+4.	Farba klobúku: hnedá=n, žltohnedá=b, škoricová=c, g=šedá, zelená=r, ružová=p, fialová=u, červená=e, biela=w, žltá=y
+5.	podliatiny: ano=t, nie=f 
+6.	pach: mandle=a, aníz=l,  kreozot=c, rybí=y, hnusný=f, zatuchnutý=m, žiaden=n, ostrý=p, pikantné=s
+7.	Pripevnenie rebra: pripojený=a, klesajúce=d, voľné=f, vrúbkované=n 
+8.	Umiestnenie repra: blízko=c, preplnené=w, vzdialené=d
+9.	Veľkosť rebra: široká = b, úzka = n 
+10.	Farba rebra: čierna=k, hnedá=n, žltohnedá=b, čokoláda=h, sivá=g, zelená=r, oranžová=o, ružová=p, fialová=u, červená=e, biela=w, žltá=y 
+11.	Tvar stonky: zväčšujúci=e, zužujúci=t 
+12.	Koreň stonky: baňatý=b, kyj=c, šálka=u, rovný=e, vláknitý=z, korene=r, chýba=?
+13.	Povrch stonky nad prstencom: vláknitý=f, šupinatý=y, hodvábny=k, hladký=s
+14.	Povrch stonky pod prstencom: vláknitý=f, šupinatý=y, hodvábny=k, hladký=s
+15.	Farba stonky nad prstencom: hnedá=n, žltohnedá=b, škoricová=c, g=šedá, oranžová=o, ružová=p, červená=e, biela=w, žltá=y 
+16.	Farba stonky pod prstencom: hnedá=n, žltohnedá=b, škoricová=c, g=šedá, oranžová=o, ružová=p, červená=e, biela=w, žltá=y
+17.	Typ závoja: čiastočný=p, univerzálny=u
+18.	Farba závoja: hnedá=n, oranžová=o, biela=w, žltá=y
+19.	Počet prstencov: žiaden=n, jedna=o, dva=t
+20.	Typ prstencov: pavučinový=c, pominuteľný=e, rozširujúci=f, veľký=l, nič=n, príveskový=p, opláštovací=s, zóna=z
+21.	Farba stopy výtrusu: čierna=k, hnedá=n, žltohnedá=b, čokoláda=h, zelená=r, oranžová=o, purpurová=u, w=biela, žltá=y
+22.	obsadenie: hojné=a, skupinové=c, početné=n, roztrúsené=s, niekoľko=v, osamelé=y
+23.	nálezisko: trávy=g, lístia=l, lúky=m, cesty=p, mestá=u, odpad=w, lesy=d
+Ako je z popisu vidno niektoré huby nemajú zaradený koreň stonky. Keďže naša databáza obsahuje veľké množstvo hríbov sme tento nedostatok vyriešili nezaradením húb do vzorky s ktorou sme následne pracovali.
+Zamerali sme sa najme na zistenie jedlosti hríbov keďže v popise databázy bolo spomenuté, že sa jedlosť dá odvodiť s vysokou pravdepodobnosťou dokonca niekoľkými spôsobmi. Ďalší príznak ktorý sme sa snažili odvodiť bolo nálezisko ktoré nám pripadalo že sa bude dať tiež dobre odvodiť keďže prostredie má vplyv na ak rastliny aj zvieratá
+
+Redukcia príznakov
+Na redukciu príznakov sme použili algoritmy PCA a ICA.
+PCA
+Tento algoritmus vyberá základné prvky na základe variancie pričom sa snaží ponechať kolmosť medzi prvkami. Toto však znamená že najväčší vplyv budú mať príznaky s najväčším počtom hodnôt. V našom prípade teda budú mat najväčší vplyv príznaky farby rôznych častí hríbu. V prípadoch že zredukujeme dáta na málo dimenzii sa môže stať že nám ostanú hlavne farby ktoré nemusia pomôcť pri  predpovedi požadovaného príznaku. 
+ICA
+	ICA predpokladá že príznaky dostane lineárnou kombináciou skrytých premenných. Na rozdiel od väčšiny algoritmov vrátane PCA tento algoritmus tiež predpokladá negausovské rozloženie dát. Tento algoritmus síce nevie separovať perfektne gausovské dáta avšak to by nemalo byť problém v prípade našich húb a mal by naše príznaky rozdeliť tak aby boli maximálne nezávislé.
+
+Klasifikácia
+Dáta sme klasifikovali pomocou lineárneho klasifikátoru, neurónových sietí, SOM, rozhodovacieho stromu. Všetky tieto klasifikátori sme najprv naučili sa rozhodovať na trénovanej množine a následne sme ich nechali rozhodovať na ostatku dát.
+Lineárny klasifikátor
+Rozdeľuje vstupné dáta nadrovinou tak aby mal jednu triedu na jednej strane a druhú triedu na druhej strane nadroviny
+Neurónové siete
+Sieť ktorá si na trénovacej množine upraví váhy vstupných dát a prechodov medzi neurónmi šírením chyby tak aby sme dostávali čo najlepšie výsledky. Pri vhodnom učení dosiahne globálne minimum chyby a preto ak zvolíme vhodnú trénovaciu množinu je pravdepodobné že bude pri klasifikácii správne klasifikovať naše huby
+SOM
+Samo organizujúce mapy sú podobne ako neurónové siete sústava pospájaných neurónov avšak sú pospájané do mriežky a vstupné dáta sú spojené s každým neurónom. Výsledkom SOM je mapa kde podobné huby budú mapované blízko seba a rozdielne huby oddenelne. 
+Rozhodovací strom
+Vytvára strom tak že pre každý uzol vezme príznak s najlepším ohodnotením a rozvetví ho na základe hodnoty tohto príznaku. Dáta rozdeľuje na základe vetvenia stromu na podmnožiny až kým nedostane jednoznačné rozdelenie požadovaného príznaku. Teda každý list obsahuje len hľadaný príznak s jednou hodnotou
+Porovnanie
+Vyhodnotenie
+
