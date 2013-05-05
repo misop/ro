@@ -3,7 +3,7 @@ learnT = c;
 test = mushs;
 testT = c;
 
-w = LinearClassifier(learn, learnT, 0, 5000);
+w = LinearClassifier(learn, learnT, 5000);
 dots = (w * test.')';
 dots = (dots > 0) + 1;
 [m, x] = size(test);

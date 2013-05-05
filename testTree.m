@@ -63,11 +63,15 @@ for pocet_dimenzii = 1:(d_stlpce-1)
 
         % porovnaj vysledky s nasim stlpcom
         [mm, nn] = size(a);
-        threshold = 0.5;
+        %threshold = 0.5;
 
         % zisti kolko je "negativnych" vysledkov
         b = abs(a - test_column);
-        negatives = sum(b > threshold);
+        % obmedz hornou hranicou
+        b = min(b, 1);
+        %negatives = sum(b > threshold);
+        % spocitaj percenta
+        negatives = sum(b);
         
         % skos na percenta
         result(validacia) = 100 - ((negatives / mm) * 100);
