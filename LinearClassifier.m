@@ -29,7 +29,11 @@ for i=1:max_it
             if(error(j) > 0)
                 idx = idx + 1;
                 if(idx == k)
-                    vektor = vektor + data_set(j,:);
+                    if target(j) == 0
+                        vektor = vektor - data_set(j,:);
+                    else
+                        vektor = vektor + data_set(j,:);
+                    end
                 end;
             end;
         end;
