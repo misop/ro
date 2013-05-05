@@ -7,22 +7,27 @@ function testNN(database, selected_column, pocet_validacii, redukcia)
 % pre kazdu dimenziu mame cislo -> vysledna ROC krivka
 ROCs = zeros((d_stlpce-1), 1);
 for pocet_dimenzii = 1:(d_stlpce-1)
-    idx = 1;
-    pocet_casti = 4;
     result = zeros(pocet_validacii, 1);
     display(pocet_dimenzii);
     for validacia = 1:pocet_validacii
         display(validacia);
-        % rozdeli databazu na dany pocet casti
-        indices = crossvalind('Kfold', database(:,selected_column), pocet_casti);
-        % priradi patricne indexy pre dane casti, pricom
-        % pocet_casti - 1 = trenovacia mnozina
-        % 1 - testovacia mnozina
-        mI1 = indices ~= idx;
-        mI2 = indices == idx;
-        % priradi databazu pre dane indexy
-        training = database(mI1, :);
-        testing = database(mI2, :);
+        
+        %  ci sa ma pouzit kross validacia alebo nie
+        if(pocet_validacii > 1)
+            % rozdeli databazu na dany pocet casti
+            indices = crossvalind('Kfold', database(:,selected_column), pocet_validacii);
+            % priradi patricne indexy pre dane casti, pricom
+            % pocet_casti - 1 = trenovacia mnozina
+            % 1 - testovacia mnozina
+            mI1 = indices ~= validacia;
+            mI2 = indices == validacia;
+            % priradi databazu pre dane indexy
+            training = database(mI1, :);
+            testing = database(mI2, :);
+        else
+            training = database;
+            testing = database;            
+        end;
 
         % vyselektne ten stlpec ktory testujeme
         [train_column, train_set] = takeColumn(training, selected_column);
@@ -37,8 +42,11 @@ for pocet_dimenzii = 1:(d_stlpce-1)
                 train_set = compute_mapping(train_set, 'FA', pocet_dimenzii);
                 test_set = compute_mapping(test_set, 'FA', pocet_dimenzii);
             elseif(redukcia == 2)
-                 train_set = fastica(train_set', 'numOfIC', pocet_dimenzii, 'stabilization', 'on', 'maxNumIterations', 5000)';
-                 test_set = fastica(test_set', 'numOfIC', pocet_dimenzii, 'stabilization', 'on', 'maxNumIterations', 5000)';
+                 train_set = fastica(train_set', 'numOfIC', pocet_dimenzii, 'stabilization', 'on')';
+                 test_set = fastica(test_set', 'numOfIC', pocet_dimenzii, 'stabilization', 'on')';
+            elseif(redukcia == 3)
+                 train_set = myICA(train_set',pocet_dimenzii,false)';
+                 test_set = myICA(test_set',pocet_dimenzii,false)';
             end;
         end;
         
@@ -54,7 +62,7 @@ for pocet_dimenzii = 1:(d_stlpce-1)
         %sem das testovaciu mnozinu bez stlpika
         test = test_set';
         %sem das stlpik skonvertovany output2binary
-        tt = output2binary2(test_column)';
+        %c = output2binary2(test_column)';
 
         % Create a Pattern Recognition Network
         hiddenLayerSize = 10;
@@ -117,22 +125,9 @@ for pocet_dimenzii = 1:(d_stlpce-1)
         % View the Network
         %view(net)
 
-        % Plots
-        % Uncomment these lines to enable various plots.
-        %figure, plotperform(tr)
-        %figure, plottrainstate(tr)
-        %figure, plotconfusion(targets,outputs)
-        %figure, ploterrhist(errors)
-
         % ---------------------------
         % -----------END-------------
         % ---------------------------
-        
-        % updatni idx, nech kazdym cyklom zvolim inu cast na testovanie
-        idx = idx + 1;
-        if(idx > pocet_casti)
-            idx = pocet_casti;
-        end;
     end;
     % vloz hodnoty do nasho pola, ktore potom vykreslime
     % malo by byt v percentach
