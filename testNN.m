@@ -50,11 +50,11 @@ for pocet_dimenzii = 1:(d_stlpce-1)
         %sem das testovaciu mnozinu bez stlpika na urcenie
         inputs = train_set';
         %sem das stlpik na urcenie prekonvertovany funkciu output2binary
-        it = output2binary(train_column)';
+        it = output2binary2(train_column)';
         %sem das testovaciu mnozinu bez stlpika
         test = test_set';
         %sem das stlpik skonvertovany output2binary
-        tt = output2binary(test_column)';
+        tt = output2binary2(test_column)';
 
         % Create a Pattern Recognition Network
         hiddenLayerSize = 10;
@@ -105,10 +105,10 @@ for pocet_dimenzii = 1:(d_stlpce-1)
         for i = 1:m
             [maxim, ind] = max(outputs(:,i));
             outs = [outs ind];
-            correct = [correct (ind == c(i))];
+            correct = [correct (ind == test_column(i))];
         end;
-        rate = sum(correct)/m
-        [confusion, order] = confusionmat(outs, c')
+        result(validacia) = (sum(correct)/m) * 100;
+        %[confusion, order] = confusionmat(outs, c')
         %toto som pridal vykresli ti to roc krivku :)
         % outs = sim(net, test);
         % plotroc(target, outs);
