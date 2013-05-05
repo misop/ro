@@ -74,7 +74,7 @@ end
 
 out = net(test);
 % out = out';
-[m,n] = size(mushs);
+[m,n] = size(test');
 %correct je boolean matica tych co urcil spravne
 correct = [];
 outs = [];
@@ -91,7 +91,7 @@ outputs = output2binary(outs');
 %outs = sim(net, test);
 %confusion matica celkom fajn ale asi ju prezen excelom nech nejako vyzera
 %:D
-[confusion, order] = confusionmat(outs, c');
+[confusion, order] = confusionmat(outs, c')
 %ROC pre viac ako ano/nie je blbost :D
 %figure; plotroc(cT, outputs);
 

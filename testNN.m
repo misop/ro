@@ -92,9 +92,23 @@ for pocet_dimenzii = 1:(d_stlpce-1)
         [net,tr] = train(net,inputs,it);
 
         % Test the Network
+%         outputs = net(test);
+%         errors = abs(gsubtract(tt,outputs));
+%         result(validacia) = (1 - mean(mean(errors))) * 100;
+        % pre kazdy zisti kde bola max pravdepodobnost a vrati
+        % rate ako SOM aj confusion maticu :)
         outputs = net(test);
-        errors = abs(gsubtract(tt,outputs));
-        result(validacia) = (1 - mean(mean(errors))) * 100;
+
+        [m,n] = size(test');
+        correct = [];
+        outs = [];
+        for i = 1:m
+            [maxim, ind] = max(outputs(:,i));
+            outs = [outs ind];
+            correct = [correct (ind == c(i))];
+        end;
+        rate = sum(correct)/m
+        [confusion, order] = confusionmat(outs, c')
         %toto som pridal vykresli ti to roc krivku :)
         % outs = sim(net, test);
         % plotroc(target, outs);

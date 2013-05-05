@@ -61,17 +61,28 @@ outputs = net(inputs);
 errors = gsubtract(targets,outputs);
 performance = perform(net,targets,outputs)
 %toto som pridal vykresli ti to roc krivku :)
-outs = sim(net, test);
-plotroc(target, outs);
-figure, plotconfusion(target, outs)
+outs = net(test);
+
+[m,n] = size(test');
+correct = [];
+outps = [];
+for i = 1:m
+    [maxim, ind] = max(outs(:,i));
+    outps = [outps ind];
+    correct = [correct (ind == c(i))];
+end;
+rate = sum(correct)/m
+[confusion, order] = confusionmat(outps, c')
+% plotroc(target, outs);
+% figure, plotconfusion(target, outs)
 
 % Recalculate Training, Validation and Test Performance
-trainTargets = targets .* tr.trainMask{1};
-valTargets = targets  .* tr.valMask{1};
-testTargets = targets  .* tr.testMask{1};
-trainPerformance = perform(net,trainTargets,outputs)
-valPerformance = perform(net,valTargets,outputs)
-testPerformance = perform(net,testTargets,outputs)
+% trainTargets = targets .* tr.trainMask{1};
+% valTargets = targets  .* tr.valMask{1};
+% testTargets = targets  .* tr.testMask{1};
+% trainPerformance = perform(net,trainTargets,outputs)
+% valPerformance = perform(net,valTargets,outputs)
+% testPerformance = perform(net,testTargets,outputs)
 
 % View the Network
 %view(net)

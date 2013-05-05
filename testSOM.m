@@ -88,7 +88,8 @@ for pocet_dimenzii = 1:(d_stlpce-1)
 
         out = net(test);
         % out = out';
-        [m,n] = size(test_set);
+        %tuna asi treba transponovat inak my to nesedelo u mna
+        [m,n] = size(test_set');
         %correct je boolean matica tych co urcil spravne
         correct = [];
         outs = [];
