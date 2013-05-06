@@ -10,12 +10,12 @@ function testTree(database, selected_column, pocet_validacii, redukcia)
 ROCs = zeros((d_stlpce-1), 1);
 for pocet_dimenzii = 1:(d_stlpce-1)
     result = zeros(pocet_validacii, 1);
+    
+    % rozdeli databazu na dany pocet casti
+    indices = crossvalind('Kfold', database(:,selected_column), pocet_validacii);    
     for validacia = 1:pocet_validacii
-
         %  ci sa ma pouzit kross validacia alebo nie
         if(pocet_validacii > 1)
-            % rozdeli databazu na dany pocet casti
-            indices = crossvalind('Kfold', database(:,selected_column), pocet_validacii);
             % priradi patricne indexy pre dane casti, pricom
             % trenovacia mnozina = pocet_casti - 1
             % testovacia mnozina = 1
