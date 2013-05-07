@@ -8,7 +8,7 @@ function testTree(database, selected_column, pocet_validacii, redukcia)
 [d_riadky, d_stlpce] = size(database);
 % pre kazdu dimenziu mame cislo -> vysledna ROC krivka
 ROCs = zeros((d_stlpce-1), 1);
-for pocet_dimenzii = 1:(d_stlpce-1)
+for pocet_dimenzii = (d_stlpce-1):(d_stlpce-1)%1:(d_stlpce-1)
     result = zeros(pocet_validacii, 1);
     
     % rozdeli databazu na dany pocet casti
@@ -57,6 +57,7 @@ for pocet_dimenzii = 1:(d_stlpce-1)
         
         % natrenuj strom
         t = classregtree(train_set, train_column);
+        view(t);
 
         % otestuj strom
         a = t.eval(test_set);
